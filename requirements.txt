@@ -5,3 +5,5 @@ uvicorn
 SQLAlchemy
 pydantic
 ruff
+starlette
+oneagent-sdk
