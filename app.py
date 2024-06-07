@@ -12,7 +12,7 @@ env = AppEnv()
 
 @app.get("/health")
 async def root():
-    return JSONResponse({"message": "Welcome to the FastAPI"}, status_code=200)
+    return JSONResponse({"message": "Welcome to the FastAPI Application"}, status_code=200)
 
 @app.get("/{name}")
 async def get_name(name):
