@@ -7,3 +7,5 @@ pydantic
 ruff
 starlette
 oneagent-sdk
+pandas
+cfenv
