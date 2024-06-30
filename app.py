@@ -24,6 +24,7 @@ async def get_name(name):
 
 @app.post("/name")
 async def post_name(request: NameRequest):
+    print("chandana")
     return JSONResponse({"name": request.name}, status_code=200)
 
 if __name__ == "__main__":
