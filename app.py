@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 from cfenv import AppEnv
 
+class NameRequest(BaseModel):
+    name: str
 
 app = FastAPI(
     title="Sample FastAPI Project",
@@ -19,6 +22,9 @@ async def root():
 async def get_name(name):
     return JSONResponse({"name": name}, status_code=200)
 
+@app.post("/name")
+async def post_name(request: NameRequest):
+    return JSONResponse({"name": request.name}, status_code=200)
 
 if __name__ == "__main__":
     import uvicorn
