@@ -1,8 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from cfenv import AppEnv
+from operations import perform_operation
+from pydantic import BaseModel
 
 
+class OperationRequest(BaseModel):
+    a: int
+    b: int
+    operator: str
 app = FastAPI(
     title="Sample FastAPI Project",
     description= "This is a simple FastAPI routers creation",
@@ -18,6 +24,20 @@ async def root():
 @app.get("/{name}")
 async def get_name(name):
     return JSONResponse({"name": name}, status_code=200)
+
+@app.post("/operation")
+async def perform_operation_endpoint(request: OperationRequest):
+    result = perform_operation(request.a, request.b, request.operator)
+    if "Error" in str(result):
+        raise HTTPException(status_code=400, detail=result)
+    return JSONResponse({"result": result})
+
+@app.get("/operation/{a}/{b}/{operator}")
+async def perform_operation_get(a: int, b: int, operator: str):
+    result = perform_operation(a, b, operator)
+    if "Error" in str(result):
+        raise HTTPException(status_code=400, detail=result)
+    return JSONResponse({"result": result})
 
 
 if __name__ == "__main__":
