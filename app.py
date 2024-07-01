@@ -18,9 +18,20 @@ env = AppEnv()
 async def root():
     return JSONResponse({"message": "Welcome to the FastAPI Application"}, status_code=200)
 
+@app.post("/factorial/{n}")
+async def factorial(n: int):
+    fact=1
+    for i in range(2,n+1):
+        fact=fact*i
+    print("factorial of {n} is",fact)
+    return JSONResponse({"result":fact})
+        
+
 @app.get("/{name}")
 async def get_name(name):
     return JSONResponse({"name": name}, status_code=200)
+
+
 
 @app.post("/name")
 async def post_name(request: NameRequest):
@@ -29,4 +40,4 @@ async def post_name(request: NameRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run('app:app', host="192.168.0.124", port=8082,reload=True)
+    uvicorn.run('app:app', port=8082, reload=True)
