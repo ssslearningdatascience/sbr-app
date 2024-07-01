@@ -2,13 +2,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from cfenv import AppEnv
 from operations import perform_operation
-from pydantic import BaseModel
+from schemas import OperationRequest
 
-
-class OperationRequest(BaseModel):
-    a: int
-    b: int
-    operator: str
 app = FastAPI(
     title="Sample FastAPI Project",
     description= "This is a simple FastAPI routers creation",
