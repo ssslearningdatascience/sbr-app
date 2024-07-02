@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: FastAPI",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/app.py",  // Update to your main script
+            "console": "integratedTerminal",
+            "args": [
+                "run",
+                "--host",
+                "0.0.0.0",  // Bind to all network interfaces
+                "--port",
+                "8083"  // Specify the port
+            ],
+            "env": {
+                "PYTHONUNBUFFERED": "1"
+            }
+        }
+    ]
+}
