@@ -1,10 +1,15 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from cfenv import AppEnv
 
+from operations import perform_operation
+from schemas import OperationRequest
+
+
 class NameRequest(BaseModel):
     name: str
+
 
 app = FastAPI(
     title="Sample FastAPI Project",
@@ -30,6 +35,20 @@ async def factorial(n: int):
 @app.get("/{name}")
 async def get_name(name):
     return JSONResponse({"name": name}, status_code=200)
+
+@app.post("/operation")
+async def perform_operation_endpoint(request: OperationRequest):
+    result = perform_operation(request.a, request.b, request.operator)
+    if "Error" in str(result):
+        raise HTTPException(status_code=400, detail=result)
+    return JSONResponse({"result": result})
+
+@app.get("/operation/{a}/{b}/{operator}")
+async def perform_operation_get(a: int, b: int, operator: str):
+    result = perform_operation(a, b, operator)
+    if "Error" in str(result):
+        raise HTTPException(status_code=400, detail=result)
+    return JSONResponse({"result": result})
 
 
 
